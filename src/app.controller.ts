@@ -9,7 +9,7 @@ import { GalaChainResponse, UserProfileBody } from '@gala-chain/api';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @Get()
   getHello(): string {
@@ -35,13 +35,15 @@ export class AppController {
     );
   }
 
-  @Post('registerself/:publicKey')
-  async register(@Param('publicKey') publicKey: string) {
+  @Post('registerself/')
+  async register(@Body('publicKey') publicKey: string) {
     const registration = await this.appService.registerUser(
       this.getAdminUser(),
       publicKey,
     );
-    return registration;
+    if (registration.Status === 1) {
+      return registration;
+    } else throw registration;
   }
 
   @Post('asset/:contract/:method')
