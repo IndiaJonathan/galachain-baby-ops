@@ -4,12 +4,12 @@ import { Variety } from './types';
 import { ethers } from 'ethers';
 import * as fs from 'fs';
 import * as path from 'path';
-import { PublicKeyApi, ServerSigningClient } from '@gala-chain/connect';
+import { PublicKeyApi, SigningClient } from '@gala-chain/connect';
 import { GalaChainResponse, UserProfileBody } from '@gala-chain/api';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   getHello(): string {
@@ -23,9 +23,7 @@ export class AppController {
       this.getAdminUser(),
       randomWallet.publicKey,
     );
-    const serverSigningClient = new ServerSigningClient(
-      randomWallet.privateKey,
-    );
+    const serverSigningClient = new SigningClient(randomWallet.privateKey);
 
     const dto = await serverSigningClient.sign('PublicKeyContract', {}); //Empty because we just need the signature
     return this.appService.postArbitrary(
