@@ -6,6 +6,7 @@ import { CredentialsService } from './credentials/credentials.service';
 import { S3Service } from './S3Service';
 import { ConfigService } from './config.service';
 import { Startup } from './Startup';
+import { PublicKeyService } from './publickey/public-key.service';
 
 @Module({
   imports: [],
@@ -21,7 +22,8 @@ import { Startup } from './Startup';
     TokenService,
     S3Service,
     CredentialsService,
-    Startup
+    Startup,
+    PublicKeyService,
   ],
 })
 export class AppModule {}

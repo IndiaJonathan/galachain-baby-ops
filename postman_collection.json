@@ -1,137 +1,164 @@
 {
 	"info": {
-		"_postman_id": "b027e57d-5067-4491-bfa6-485fae9f4c34",
-		"name": "Hackathon-2024",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16623525"
+	  "_postman_id": "b027e57d-5067-4491-bfa6-485fae9f4c34",
+	  "name": "Hackathon-2024",
+	  "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+	  "_exporter_id": "16623525"
 	},
 	"item": [
-		{
-			"name": "Create Eth",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/create-eth",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"create-eth"
-					]
-				}
-			},
-			"response": []
+	  {
+		"name": "Create Eth",
+		"request": {
+		  "method": "POST",
+		  "header": [],
+		  "url": {
+			"raw": "{{url}}/create-eth",
+			"host": [
+			  "{{url}}"
+			],
+			"path": [
+			  "create-eth"
+			]
+		  }
 		},
-		{
-			"name": "RegisterEth",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/register-eth/eth|7cd8ed5b867f7e020edc0b141f27cfc12e7bc16f3209a695d1a50ffabbc604a8e1256a2afbbe5150b28fdbee474db375f2365424eea7910e752c0a0d6759b8f8",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"register-eth",
-						"eth|7cd8ed5b867f7e020edc0b141f27cfc12e7bc16f3209a695d1a50ffabbc604a8e1256a2afbbe5150b28fdbee474db375f2365424eea7910e752c0a0d6759b8f8"
-					]
-				}
-			},
-			"response": []
+		"response": []
+	  },
+	  {
+		"name": "RegisterEth",
+		"request": {
+		  "method": "POST",
+		  "header": [],
+		  "url": {
+			"raw": "{{url}}/register-eth/eth|7cd8ed5b867f7e020edc0b141f27cfc12e7bc16f3209a695d1a50ffabbc604a8e1256a2afbbe5150b28fdbee474db375f2365424eea7910e752c0a0d6759b8f8",
+			"host": [
+			  "{{url}}"
+			],
+			"path": [
+			  "register-eth",
+			  "eth|7cd8ed5b867f7e020edc0b141f27cfc12e7bc16f3209a695d1a50ffabbc604a8e1256a2afbbe5150b28fdbee474db375f2365424eea7910e752c0a0d6759b8f8"
+			]
+		  }
 		},
-		{
-			"name": "RegisterNewRandom",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/register/new-random",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"register",
-						"new-random"
-					]
-				}
-			},
-			"response": []
+		"response": []
+	  },
+	  {
+		"name": "RegisterNewRandom",
+		"request": {
+		  "method": "POST",
+		  "header": [],
+		  "url": {
+			"raw": "{{url}}/register/new-random",
+			"host": [
+			  "{{url}}"
+			],
+			"path": [
+			  "register",
+			  "new-random"
+			]
+		  }
 		},
-		{
-			"name": "RegisterEth Copy",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/register-eth/eth|7cd8ed5b867f7e020edc0b141f27cfc12e7bc16f3209a695d1a50ffabbc604a8e1256a2afbbe5150b28fdbee474db375f2365424eea7910e752c0a0d6759b8f8",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"register-eth",
-						"eth|7cd8ed5b867f7e020edc0b141f27cfc12e7bc16f3209a695d1a50ffabbc604a8e1256a2afbbe5150b28fdbee474db375f2365424eea7910e752c0a0d6759b8f8"
-					]
-				}
-			},
-			"response": []
+		"response": []
+	  },
+	  {
+		"name": "RegisterEth Copy",
+		"request": {
+		  "method": "POST",
+		  "header": [],
+		  "url": {
+			"raw": "{{url}}/register-eth/eth|7cd8ed5b867f7e020edc0b141f27cfc12e7bc16f3209a695d1a50ffabbc604a8e1256a2afbbe5150b28fdbee474db375f2365424eea7910e752c0a0d6759b8f8",
+			"host": [
+			  "{{url}}"
+			],
+			"path": [
+			  "register-eth",
+			  "eth|7cd8ed5b867f7e020edc0b141f27cfc12e7bc16f3209a695d1a50ffabbc604a8e1256a2afbbe5150b28fdbee474db375f2365424eea7910e752c0a0d6759b8f8"
+			]
+		  }
 		},
-		{
-			"name": "New Request",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/token/mint",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"token",
-						"mint"
-					]
-				}
-			},
-			"response": []
+		"response": []
+	  },
+	  {
+		"name": "New Request",
+		"request": {
+		  "method": "POST",
+		  "header": [],
+		  "url": {
+			"raw": "{{url}}/token/mint",
+			"host": [
+			  "{{url}}"
+			],
+			"path": [
+			  "token",
+			  "mint"
+			]
+		  }
 		},
-		{
-			"name": "Give Token",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/token/give/1/eth|85F36DCee044DA395F3D858E16aa86C40f8d3fDb",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"token",
-						"give",
-						"1",
-						"eth|85F36DCee044DA395F3D858E16aa86C40f8d3fDb"
-					]
-				}
-			},
-			"response": []
+		"response": []
+	  },
+	  {
+		"name": "Give Token",
+		"request": {
+		  "method": "POST",
+		  "header": [],
+		  "url": {
+			"raw": "{{url}}/token/give/1/eth|85F36DCee044DA395F3D858E16aa86C40f8d3fDb",
+			"host": [
+			  "{{url}}"
+			],
+			"path": [
+			  "token",
+			  "give",
+			  "1",
+			  "eth|85F36DCee044DA395F3D858E16aa86C40f8d3fDb"
+			]
+		  }
 		},
-		{
-			"name": "Get Balances",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/token/eth|85F36DCee044DA395F3D858E16aa86C40f8d3fDb",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"token",
-						"eth|85F36DCee044DA395F3D858E16aa86C40f8d3fDb"
-					]
-				}
-			},
-			"response": []
-		}
+		"response": []
+	  },
+	  {
+		"name": "Get Balances",
+		"request": {
+		  "method": "GET",
+		  "header": [],
+		  "url": {
+			"raw": "{{url}}/token/eth|85F36DCee044DA395F3D858E16aa86C40f8d3fDb",
+			"host": [
+			  "{{url}}"
+			],
+			"path": [
+			  "token",
+			  "eth|85F36DCee044DA395F3D858E16aa86C40f8d3fDb"
+			]
+		  }
+		},
+		"response": []
+	  },
+	  {
+		"name": "Create Token",
+		"request": {
+		  "method": "POST",
+		  "header": [
+			{
+			  "key": "Content-Type",
+			  "value": "application/json"
+			}
+		  ],
+		  "body": {
+			"mode": "raw",
+			"raw": "{\n  \"decimals\": 18,\n  \"collection\": \"MyCollection\",\n  \"description\": \"A unique token\",\n  \"category\": \"Art\",\n  \"name\": \"UniqueArtToken\",\n  \"isNonFungible\": true,\n  \"image\": \"http://example.com/image.png\",\n  \"rarity\": \"Rare\",\n  \"maxSupply\": 1000\n}"
+		  },
+		  "url": {
+			"raw": "{{url}}/createToken",
+			"host": [
+			  "{{url}}"
+			],
+			"path": [
+			  "createToken"
+			]
+		  }
+		},
+		"response": []
+	  }
 	]
-}
+  }
+  

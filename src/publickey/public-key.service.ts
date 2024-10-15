@@ -5,6 +5,7 @@ import {
   FetchBalancesDto,
   FetchTokenClassesDto,
   GalaChainResponse,
+  GetPublicKeyDto,
   GrantAllowanceDto,
   MintTokenDto,
   TokenAllowance,
@@ -24,7 +25,7 @@ import { resolve } from 'path';
 import { channel } from 'diagnostics_channel';
 
 @Injectable()
-export class TokenService {
+export class PublicKeyService {
   client: ChainClient;
   constructor(
     @Inject(S3Service) private s3service: S3Service,
@@ -42,20 +43,19 @@ export class TokenService {
     const contract: ContractConfig = {
       channel: 'product-channel',
       chaincode: 'basic-product',
-      contract: 'GalaChainToken',
+      contract: 'PublicKeyContract',
     };
 
     this.client = gcclient.forConnectionProfile(params).forContract(contract);
   }
 
-  async getBalance(identityKey: string): Promise<GalaChainResponse<unknown>> {
-    const dto = await createValidDTO<FetchBalancesDto>(FetchBalancesDto, {
-      owner: identityKey,
+  async getPublicKey(userAlias: string): Promise<GalaChainResponse<unknown>> {
+    const dto = await createValidDTO<GetPublicKeyDto>(GetPublicKeyDto, {
+      user: userAlias,
     });
 
-    //TODO sign this without admin later
     const data = await this.client.evaluateTransaction(
-      'FetchBalances',
+      'GetPublicKey',
       dto.signed(this.credService.getAdminUser()),
     );
     return data;
@@ -137,13 +137,13 @@ export class TokenService {
         name: tokenData.name,
         symbol: tokenData.name.slice(0, 20).replace(/\s/g, ''),
         description: tokenData.description,
-        isNonFungible: false,
+        isNonFungible: true,
         image: s3Key,
         maxSupply:
           tokenData.maxSupply != null
             ? BigNumber(tokenData.maxSupply)
             : BigNumber(Number.MAX_SAFE_INTEGER),
-        ...(authority != null && { authorities: [authority] }),
+        authorities: authority != null ? [authority] : [],
       });
 
     // When

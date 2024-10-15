@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { Variety } from './types';
 import { ethers } from 'ethers';
@@ -6,10 +15,19 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { PublicKeyApi, SigningClient } from '@gala-chain/connect';
 import { GalaChainResponse, UserProfileBody } from '@gala-chain/api';
+import { TokenService } from './token/token.service';
+import { TokenDataDto } from './dto/token.dto';
+import { PublicKeyService } from './publickey/public-key.service';
+import { CredentialsService } from './credentials/credentials.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    @Inject(TokenService) private tokenService: TokenService,
+    @Inject(PublicKeyService) private publicKeyService: PublicKeyService,
+    @Inject(CredentialsService) private credentialsService: CredentialsService,
+  ) {}
 
   @Get()
   getHello(): string {
@@ -20,7 +38,7 @@ export class AppController {
   async serverSignTest(): Promise<GalaChainResponse<unknown>> {
     const randomWallet = ethers.Wallet.createRandom();
     const registration = await this.appService.registerUser(
-      this.getAdminUser(),
+      this.credentialsService.getAdminUser(),
       randomWallet.publicKey,
     );
     const serverSigningClient = new SigningClient(randomWallet.privateKey);
@@ -36,12 +54,31 @@ export class AppController {
   @Post('registerself/')
   async register(@Body('publicKey') publicKey: string) {
     const registration = await this.appService.registerUser(
-      this.getAdminUser(),
+      this.credentialsService.getAdminUser(),
       publicKey,
     );
     if (registration.Status === 1) {
       return registration;
     } else throw registration;
+  }
+
+  @Post('createToken')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  createToken(@Body() tokenData: TokenDataDto) {
+    return this.tokenService.createToken(tokenData, tokenData.authority);
+  }
+
+  @Post('galachain/api/asset/public-key-contract/GetPublicKey')
+  getPublicKey(@Body('user') userAlias: string) {
+    return this.publicKeyService.getPublicKey(userAlias);
+  }
+
+  @Post('v1/CreateHeadlessWallet')
+  createHeadlessWallet(@Body('publicKey') publicKey: string) {
+    return this.appService.registerUser(
+      this.credentialsService.getAdminUser(),
+      publicKey,
+    );
   }
 
   @Post('asset/:contract/:method')
@@ -68,7 +105,7 @@ export class AppController {
   }> {
     const randomWallet = ethers.Wallet.createRandom();
     const registration = await this.appService.registerUser(
-      this.getAdminUser(),
+      this.credentialsService.getAdminUser(),
       randomWallet.publicKey,
     );
 
@@ -83,19 +120,9 @@ export class AppController {
   async registerUser(
     @Param('public') publicKey: string,
   ): Promise<GalaChainResponse<unknown>> {
-    return this.appService.registerUser(this.getAdminUser(), publicKey);
-  }
-
-  getAdminUser() {
-    const privateKey =
-      process.env.TEST_ADMIN_PRIVATE_KEY ??
-      fs
-        .readFileSync(
-          path.resolve('dev-admin-key/dev-admin.priv.hex.txt'),
-          'utf-8',
-        )
-        .toString();
-
-    return privateKey;
+    return this.appService.registerUser(
+      this.credentialsService.getAdminUser(),
+      publicKey,
+    );
   }
 }
