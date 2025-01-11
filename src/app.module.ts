@@ -22,7 +22,6 @@ import { PublicKeyService } from './publickey/public-key.service';
     TokenService,
     S3Service,
     CredentialsService,
-    Startup,
     PublicKeyService,
   ],
 })

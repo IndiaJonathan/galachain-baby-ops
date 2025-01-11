@@ -14,7 +14,7 @@ import { ethers } from 'ethers';
 import * as fs from 'fs';
 import * as path from 'path';
 import { PublicKeyApi, SigningClient } from '@gala-chain/connect';
-import { GalaChainResponse, UserProfileBody } from '@gala-chain/api';
+import { GalaChainResponse } from '@gala-chain/api';
 import { TokenService } from './token/token.service';
 import { TokenDataDto } from './dto/token.dto';
 import { PublicKeyService } from './publickey/public-key.service';

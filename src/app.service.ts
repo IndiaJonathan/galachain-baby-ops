@@ -1,5 +1,6 @@
 import {
   ChainCallDTO,
+  GalaChainResponse,
   RegisterEthUserDto,
   createValidDTO,
 } from '@gala-chain/api';
@@ -70,10 +71,20 @@ export class AppService {
       );
 
     const testDto = await createValidDTO(ChainCallDTO, body);
-    const response = await contractConfg.submitTransaction(method, testDto);
+    let response: GalaChainResponse<unknown>;
+    if (method.toLowerCase().includes('fetch')) {
+      response = await contractConfg.evaluateTransaction(method, testDto);
+    } else {
+      response = await contractConfg.submitTransaction(method, testDto);
+    }
+
     if (response.ErrorCode) {
       throw new HttpException(
-        response.Message || 'Galachain error',
+        {
+          ...response,
+          error: { ErrorKey: response },
+          message: response.Message,
+        },
         response.ErrorCode,
       );
     }
