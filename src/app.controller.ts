@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
   Inject,
   Param,
   Post,
@@ -14,11 +15,16 @@ import { ethers } from 'ethers';
 import * as fs from 'fs';
 import * as path from 'path';
 import { PublicKeyApi, SigningClient } from '@gala-chain/connect';
-import { GalaChainResponse } from '@gala-chain/api';
+import {
+  ChainCallDTO,
+  createValidDTO,
+  GalaChainResponse,
+} from '@gala-chain/api';
 import { TokenService } from './token/token.service';
 import { TokenDataDto } from './dto/token.dto';
 import { PublicKeyService } from './publickey/public-key.service';
 import { CredentialsService } from './credentials/credentials.service';
+import { EthAddressDto } from './dto/address';
 
 @Controller()
 export class AppController {
@@ -34,10 +40,40 @@ export class AppController {
     return this.appService.getHello();
   }
 
-
   @Get('v1/tokencreationjobs')
   getTokenCreationJobs(): string {
     return JSON.stringify([]);
+  }
+
+  @Post('v1/registered')
+  async getIsRegistered(@Body() body: EthAddressDto) {
+    const contract = this.appService.getContract('PublicKeyContract');
+
+    const getObjectDto = await createValidDTO(ChainCallDTO, {
+      objectId: `\u0000GCUP\u0000${body.address
+        .replace('0x', '')
+        .replace('eth|', '')}\u0000`,
+    } as any);
+
+    const isRegisteredResponse: any = await contract.evaluateTransaction(
+      'GetObjectByKey',
+      getObjectDto,
+    );
+
+    if (
+      isRegisteredResponse.result === 'Error' &&
+      isRegisteredResponse.status !== 404
+    ) {
+      throw new HttpException(
+        isRegisteredResponse.status ?? 500,
+        isRegisteredResponse.data,
+      );
+    }
+
+    return {
+      status: 200,
+      data: { exists: isRegisteredResponse.status === 200 },
+    };
   }
 
   @Post('server-side/test')

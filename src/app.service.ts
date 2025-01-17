@@ -62,17 +62,26 @@ export class AppService {
     };
   }
 
-  public async postArbitrary(contract: string, method: string, body: any) {
+  public getContract(contract: string) {
     const contractConfg = this.clients[contract.toLowerCase()];
-
     if (!contractConfg)
       throw new NotFoundException(
         `Unable to find contract: ${contract} in the configuration`,
       );
+    return contractConfg;
+  }
+
+  public async postArbitrary(
+    contract: string,
+    method: string,
+    body: any,
+    sign = true,
+  ) {
+    const contractConfg = this.getContract(contract);
 
     const testDto = await createValidDTO(ChainCallDTO, body);
     let response: GalaChainResponse<unknown>;
-    if (method.toLowerCase().includes('fetch')) {
+    if (method.toLowerCase().includes('fetch') || !sign) {
       response = await contractConfg.evaluateTransaction(method, testDto);
     } else {
       response = await contractConfg.submitTransaction(method, testDto);
