@@ -34,6 +34,12 @@ export class AppController {
     return this.appService.getHello();
   }
 
+
+  @Get('v1/tokencreationjobs')
+  getTokenCreationJobs(): string {
+    return JSON.stringify([]);
+  }
+
   @Post('server-side/test')
   async serverSignTest(): Promise<GalaChainResponse<unknown>> {
     const randomWallet = ethers.Wallet.createRandom();
